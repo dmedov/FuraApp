@@ -1,6 +1,7 @@
 package com.denis.furaapp.di.module
 
 import com.denis.furaapp.BuildConfig
+import com.denis.furaapp.model.map.api.PlacesApi
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -49,5 +50,11 @@ class NetworkModule {
                 .baseUrl(url)
                 .client(client)
                 .build()
+    }
+
+    @Provides
+    @Singleton
+    fun providesPlacesApi(retrofit: Retrofit): PlacesApi {
+        return retrofit.create<PlacesApi>(PlacesApi::class.java)
     }
 }
