@@ -21,7 +21,7 @@ class MapPresenter : MvpPresenter<MapView>() {
     }
 
     override fun onFirstViewAttach() {
-        mapInteractor.downloadPlaces()
+        mapInteractor.syncMapData()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe( { Timber.i("places downloaded")}, { Timber.e(it) })

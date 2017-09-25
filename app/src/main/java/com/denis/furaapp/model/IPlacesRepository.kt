@@ -1,10 +1,14 @@
 package com.denis.furaapp.model
 
+import com.denis.furaapp.model.map.entity.Place
 import com.denis.furaapp.model.map.entity.PlacesResponse
+import io.reactivex.Completable
+import io.reactivex.Observable
 import io.reactivex.Single
 
 interface IPlacesRepository {
-    fun downloadPlaces(startId: Int): Single<PlacesResponse>
+    fun fetchPlaces(startId: Int): Observable<PlacesResponse>
+    fun persistPlaces(places: List<Place>): Completable
     fun latestPlaceId(): Single<Int>
-    fun isDownloadComplete()
+    fun setLatestPlaceId(id: Int): Completable
 }
