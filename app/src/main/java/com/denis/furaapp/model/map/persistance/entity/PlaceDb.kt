@@ -1,4 +1,4 @@
-package com.denis.furaapp.model.map.db.entity
+package com.denis.furaapp.model.map.persistance.entity
 
 import android.arch.persistence.room.ColumnInfo
 import android.arch.persistence.room.Entity

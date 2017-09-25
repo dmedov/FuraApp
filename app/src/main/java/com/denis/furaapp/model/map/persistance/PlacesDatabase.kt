@@ -1,11 +1,11 @@
-package com.denis.furaapp.model.map.db
+package com.denis.furaapp.model.map.persistance
 
 import android.arch.persistence.room.Database
 import android.arch.persistence.room.RoomDatabase
-import com.denis.furaapp.model.map.db.entity.PlaceDb
+import com.denis.furaapp.model.map.persistance.entity.PlaceDb
 
 @Database(entities = arrayOf(PlaceDb::class),
         version = 1)
 abstract class PlacesDatabase : RoomDatabase() {
-    abstract fun placesDao(): PlacesDao
+    abstract fun placesDao(): IPlacesDao
 }
