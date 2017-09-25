@@ -1,5 +1,6 @@
 package com.denis.furaapp.ui.fragment.map
 
+import android.widget.Toast
 import com.denis.furaapp.R
 import com.denis.furaapp.presentation.view.map.MapView
 import com.denis.furaapp.presentation.presenter.map.MapPresenter
@@ -40,6 +41,6 @@ class MapFragment : BaseMapFragment(), MapView {
     }
 
     override fun showLoadingFinished() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        Toast.makeText(activity, getString(R.string.download_completed), Toast.LENGTH_SHORT).show()
     }
 }

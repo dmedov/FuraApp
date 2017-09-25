@@ -37,7 +37,12 @@ class MapPresenter : MvpPresenter<MapView>() {
         mapInteractor.syncMapData()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ Timber.i("places downloaded") }, { Timber.e(it) })
+                .subscribe({
+                    Timber.i("places downloaded")
+                    viewState.showLoadingFinished()
+                }, {
+                    Timber.e(it)
+                })
     }
 
 }
