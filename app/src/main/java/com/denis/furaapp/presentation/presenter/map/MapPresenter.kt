@@ -27,7 +27,7 @@ class MapPresenter : MvpPresenter<MapView>() {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    Timber.i("places observed " + it)
+                    viewState.showPlaces(it)
                 }, {
                     Timber.e(it)
                 })
