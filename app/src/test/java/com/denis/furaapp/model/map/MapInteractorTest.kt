@@ -47,7 +47,7 @@ class MapInteractorTest {
 
     private fun setUpRepository() {
         `when`(repository.fetchPlaces(1)).thenReturn(
-                Observable.just(PlacesResponse(arrayListOf(Place(1, "test", 10.1f, 10.2f, "1")),
+                Observable.just(PlacesResponse(arrayListOf(Place(1, "test", 10.1f, 10.2f, 1)),
                         true))
         )
 

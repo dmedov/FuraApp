@@ -9,7 +9,7 @@ class ComponentManager(val context: Context) {
 
     val internalAppComponent: AppComponent by lazy {
         DaggerAppComponent.builder()
-                          .appModule(AppModule()).build()
+                          .appModule(AppModule(context)).build()
     }
 
     fun appComponent() = internalAppComponent

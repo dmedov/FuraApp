@@ -1,12 +1,18 @@
 package com.denis.furaapp.model.map
 
 import com.denis.furaapp.model.IPlacesRepository
+import com.denis.furaapp.model.map.entity.Place
 import com.denis.furaapp.model.map.entity.PlacesResponse
 import io.reactivex.Completable
+import io.reactivex.Flowable
 
 class MapInteractor(private val placesRepository: IPlacesRepository) : IMapInteractor {
     override fun syncMapData(): Completable {
         return downloadPlaces()
+    }
+
+    override fun observePlaces(): Flowable<List<Place>> {
+        return placesRepository.observePlaces()
     }
 
     private fun downloadPlaces(): Completable {

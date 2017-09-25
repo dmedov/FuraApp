@@ -1,14 +1,17 @@
 package com.denis.furaapp.model
 
 import com.denis.furaapp.model.map.api.PlacesApi
+import com.denis.furaapp.model.map.db.IPlacesStorage
 import com.denis.furaapp.model.map.entity.Place
 import com.denis.furaapp.model.map.entity.PlacesResponse
 import io.reactivex.Completable
+import io.reactivex.Flowable
 import io.reactivex.Observable
 import io.reactivex.Single
 import timber.log.Timber
 
-class PlacesRepository(private val placesApi: PlacesApi) : IPlacesRepository {
+class PlacesRepository(private val placesApi: PlacesApi,
+                       private val placesStorage: IPlacesStorage) : IPlacesRepository {
 
     private var latest = 1
 
@@ -27,7 +30,7 @@ class PlacesRepository(private val placesApi: PlacesApi) : IPlacesRepository {
 
     override fun persistPlaces(places: List<Place>): Completable {
         Timber.i("persist places")
-        return Completable.complete()
+        return placesStorage.addPlaces(places)
     }
 
     override fun setLatestPlaceId(id: Int): Completable {
@@ -35,5 +38,9 @@ class PlacesRepository(private val placesApi: PlacesApi) : IPlacesRepository {
         return Completable.fromAction {
             latest = id
         }
+    }
+
+    override fun observePlaces(): Flowable<List<Place>> {
+        return placesStorage.observePlaces()
     }
 }

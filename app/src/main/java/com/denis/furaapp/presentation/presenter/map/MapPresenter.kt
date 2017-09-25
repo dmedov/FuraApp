@@ -21,10 +21,23 @@ class MapPresenter : MvpPresenter<MapView>() {
     }
 
     override fun onFirstViewAttach() {
+        synMapData()
+
+        mapInteractor.observePlaces()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    Timber.i("places observed " + it)
+                }, {
+                    Timber.e(it)
+                })
+    }
+
+    private fun synMapData() {
         mapInteractor.syncMapData()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe( { Timber.i("places downloaded")}, { Timber.e(it) })
+                .subscribe({ Timber.i("places downloaded") }, { Timber.e(it) })
     }
 
 }

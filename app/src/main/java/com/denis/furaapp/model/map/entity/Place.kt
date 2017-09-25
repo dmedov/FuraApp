@@ -6,4 +6,4 @@ data class Place(@SerializedName("id") val id: Int,
                  @SerializedName("name") val name: String?,
                  @SerializedName("lat") val lat: Float,
                  @SerializedName("lng") val lng: Float,
-                 @SerializedName("categoryId") val categoryId: String?)
+                 @SerializedName("categoryId") val categoryId: Int?)
