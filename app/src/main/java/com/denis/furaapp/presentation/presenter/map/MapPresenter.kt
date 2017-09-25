@@ -6,6 +6,7 @@ import com.arellomobile.mvp.MvpPresenter
 import com.denis.furaapp.model.map.IMapInteractor
 import com.denis.furaapp.presentation.view.map.MapView
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 import javax.inject.Inject
@@ -16,25 +17,32 @@ class MapPresenter : MvpPresenter<MapView>() {
     @Inject
     lateinit var mapInteractor: IMapInteractor
 
+    private val disposables: CompositeDisposable = CompositeDisposable()
+
     init {
         DI.componentManager().appComponent().inject(this)
     }
 
     override fun onFirstViewAttach() {
         synMapData()
+        observePersistedPlaces()
+    }
 
-        mapInteractor.observePlaces()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    viewState.showPlaces(it)
-                }, {
-                    Timber.e(it)
-                })
+    private fun observePersistedPlaces() {
+        disposables.add(
+                mapInteractor.observePlaces()
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe({
+                            viewState.showPlaces(it)
+                        }, {
+                            Timber.e(it)
+                        })
+        )
     }
 
     private fun synMapData() {
-        mapInteractor.syncMapData()
+        disposables.add(mapInteractor.syncMapData()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
@@ -43,6 +51,11 @@ class MapPresenter : MvpPresenter<MapView>() {
                 }, {
                     Timber.e(it)
                 })
+        )
     }
 
+    override fun onDestroy() {
+        disposables.clear()
+        super.onDestroy()
+    }
 }
