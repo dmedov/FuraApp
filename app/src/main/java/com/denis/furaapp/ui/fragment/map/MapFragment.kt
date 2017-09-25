@@ -36,8 +36,8 @@ class MapFragment : BaseMapFragment(), MapView {
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
-        super.onMapReady(googleMap)
         this.googleMap = googleMap
+        super.onMapReady(googleMap)
     }
 
     override fun showLoadingFinished() {
